@@ -1,4 +1,15 @@
-<h1>{{ task.title }}</h1>
-<a href="{% url 'tasks' %}">Go back</a>
+{% extends 'base/base.html' %}
 
-<p>{{ task.description }}</p>
+{% block title %}Login{% endblock title %}
+
+{% block content %}
+    <h1>{{ task.title }}</h1>
+    <a class="btn btn-info my-3" href="{% url 'tasks' %}">Go back</a>
+
+    <p>{{ task.description }}</p>
+
+    <div class="actions">
+        <a class="btn btn-warning mx-3" href="{% url 'task-edit' task.id %}">Edit</a>
+        <a class="btn btn-danger" href="{% url 'task-delete' task.id %}">Delete</a>
+    </div>
+{% endblock content %}

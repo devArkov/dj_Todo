@@ -1,3 +1,7 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Task list{% endblock title %}
+
 {% if request.user.is_authenticated %}
     <p>{{ request.user }}</p>
 <a href="{% url 'logout' %}">Logout</a>
@@ -5,54 +9,32 @@
     <a href="{% url 'login' %}">Login</a>
 {% endif %}
 
+{% block content %}
+
+    <h1>To do list</h1>
+
 <hr>
 
-<h1>To do list</h1>
-<a href="{% url 'task-create' %}">Add task</a>
-<hr>
-
-<table>
-    <tr>
-        <th>Item</th>
-        <th>Actions</th>
-    </tr>
-    {% for task in tasks %}
+    <table>
         <tr>
-        <td>
-            <a href="{% url 'task' task.id %}" title="Detail task information">{{ task.title }}</a>
-        </td>
-        <td>
-            <a href="{% url 'task-edit' task.id %}">Edit</a>
-            <a href="{% url 'task-delete' task.id %}">Delete</a>
-        </td>
+            <th>Item</th>
+            <th>Actions</th>
         </tr>
-
-
-    {% empty %}
-        <h3>You have no tasks created yet...</h3>
-    {% endfor %}
-</table>
-
-
-{% if is_paginated %}
-    <div class="pagination">
-        {% if page_obg.has_previous %}
-            <a href="?page=1">First</a>
-            <a href="?page={{ page_obj.previous_page_number }}"><<<</a>
-        {% endif %}
-
-        {% for num in page_obj.paginator.page_range %}
-            {% if page_obj.number == num %}
-                <a>{{ num }}</a>
-            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
-                <a href="?page={{ num }}">{{ num }}</a>
-            {% endif %}
+        {% for task in tasks %}
+            <tr>
+                <td>
+                    <a href="{% url 'task' task.id %}" title="Detail task information">{{ task.title }}</a>
+                </td>
+            </tr>
+        {% empty %}
+            <h3>You have no tasks created yet...</h3>
         {% endfor %}
+    </table>
 
-        {% if page_obg.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}">>>></a>
-            <a href="?page={{ page_obj.paginator.num_pages }}">Last</a>
-        {% endif %}
-    </div>
-{% endif %}
+    <hr>
+
+    {% include 'inc/pagination.html' %}
+
+{% endblock content %}
+
 
