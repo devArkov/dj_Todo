@@ -45,11 +45,12 @@ class TaskListView(LoginRequiredMixin, ListView):
     model = Task
     template_name = 'base/task_list.html'
     context_object_name = 'tasks'
+    paginate_by = 2
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['tasks'] = context['tasks'].filter(user=self.request.user)
-        context['count'] = context['tasks'].filter(complete=False).count()
+        # context['tasks'] = context['tasks'].filter(user=self.request.user)
+        # context['count'] = context['tasks'].filter(complete=False).count()
         return context
 
 
