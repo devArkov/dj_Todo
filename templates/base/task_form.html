@@ -4,15 +4,42 @@
 
 {% block content %}
 
-    <h3>Task form</h3>
+    <h3>Add task</h3>
 
-<a href="{% url 'tasks' %}">Back to list</a>
-<hr>
-
-<form method="POST" action="">
+<form method="POST" action="{% url 'task-create' %}">
     {% csrf_token %}
+
+    {{ form.as_div }}
+
+<!--      <div class="form-group mb-3">-->
+<!--          <label for="{ form.title.id_for_label }}" class="form-label">Title:</label>-->
+<!--          {{ form.title }}-->
+<!--          <div class="invalid-feedback">-->
+<!--              {{ form.title.errors }}-->
+<!--          </div>-->
+<!--      </div>-->
+
+<!--      <div class="form-group mb-3">-->
+<!--          <label for="{ form.description.id_for_label }}" class="form-label">Description:</label>-->
+<!--          {{ form.description }}-->
+<!--          <div class="invalid-feedback">-->
+<!--              {{ form.description.errors }}-->
+<!--          </div>-->
+<!--      </div>-->
+
+<!--      <div class="form-group mb-3">-->
+<!--          <label for="{ form.complete.id_for_label }}" class="form-label">Complete:</label>-->
+<!--          {{ form.complete }}-->
+<!--          <div class="invalid-feedback">-->
+<!--              {{ form.complete.errors }}-->
+<!--          </div>-->
+<!--      </div>-->
+
+    {% comment %}
     {{ form.as_p }}
-    <button class="btn btn-primary" type="submit">Add task</button>
+    {% endcomment %}
+
+    <button class="btn btn-primary btn-block" type="submit">Add task</button>
 </form>
 
 {% endblock content %}

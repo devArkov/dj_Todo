@@ -1,0 +1,40 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Task list{% endblock title %}
+
+{% block content %}
+
+    <h1>To do list</h1>
+
+<form method="GET">
+    {{ filter.form }}
+    <button type="submit" class="btn btn-success">Search</button>
+
+</form>
+
+<hr>
+
+    <table>
+        <thead>
+            <th>Title</th>
+            <th>description</th>
+            <th>Complete</th>
+        </thead>
+        {% for task in filter.qs %}
+            <tr>
+                <td>{{ task.title }}</td>
+                <td>{{ task.description }}</td>
+                <td>{{ task.complete }}</td>
+            </tr>
+        {% endfor %}
+
+        {% if is_paginated %}{% else %}{% endif %}
+    </table>
+
+        {% if is_paginated %}
+        {% include 'inc/pagination.html' %}
+    {% endif %}
+
+{% endblock content %}
+
+

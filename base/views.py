@@ -10,6 +10,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 
 from .models import Task
+from .filters import TaskFilter
 
 
 class CustomLoginView(LoginView):
@@ -85,3 +86,14 @@ class TaskDelete(LoginRequiredMixin, DeleteView):
     model = Task
     context_object_name = 'task'
     success_url = reverse_lazy('tasks')
+
+
+class TasSearchView(ListView):
+    model = Task
+    template_name = 'base/search_list.html'
+    paginate_by = 2
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['filter'] = TaskFilter(self.request.GET, queryset=self.get_queryset())
+        return context
